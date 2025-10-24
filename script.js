@@ -6,35 +6,43 @@ buttons.forEach((btn) => {
     const id = btn.id;
 
     if (id === "C") {
-      // Clear all
-      display.value = "";
+      display.innerText = "";
     } else if (id === "back") {
-      // Clear one character
-      display.value = display.value.slice(0, -1);
+      display.innerText = display.innerText.slice(0, -1);
     } else if (id === "equal") {
-      // Evaluate expression
       try {
-        display.value = eval(display.value);
+        // Prevent division by zero or invalid eval
+        if (display.innerText.trim() === "") {
+          display.innerText = "";
+          return;
+        }
+
+        const result = eval(display.innerText);
+
+        if (result === Infinity || isNaN(result)) {
+          display.innerText = "Error";
+        } else {
+          display.innerText = result;
+        }
       } catch {
-        display.value = "Error";
+        display.innerText = "Error";
       }
     } else if (id === "divi") {
-      display.value += "/";
+      display.innerText += "/";
     } else if (id === "plus") {
-      display.value += "+";
+      display.innerText += "+";
     } else if (id === "-") {
-      display.value += "-";
+      display.innerText += "-";
     } else if (id === "*") {
-      display.value += "*";
+      display.innerText += "*";
     } else if (id === "op") {
-      display.value += "(";
+      display.innerText += "(";
     } else if (id === "cl") {
-      display.value += ")";
+      display.innerText += ")";
     } else if (id === "dot") {
-      display.value += ".";
+      display.innerText += ".";
     } else {
-      // For all number buttons
-      display.value += id;
+      display.innerText += id;
     }
   });
 });
